@@ -84,7 +84,7 @@ public class XLSX2XMLConverter {
 
         // root elements
         Document doc = docBuilder.newDocument();
-        Element rootElement = doc.createElement(Tags.PRICE_LIST);
+        Element rootElement = doc.createElement("PriceList");
         doc.appendChild(rootElement);
 
         //write the header into the XML

@@ -3,6 +3,7 @@ package excel.converter;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
@@ -48,7 +49,10 @@ public class PictureParser {
         List<XSSFShape> pics = ((XSSFDrawing) drawing).getShapes();
 
         for (XSSFShape pic : pics) {
-            XSSFPicture inpPic = (XSSFPicture) pic;
+            //suppress cast conversion exception
+            try {
+                XSSFPicture inpPic = (XSSFPicture) pic;
+
             XSSFClientAnchor clientAnchor = inpPic.getClientAnchor();
             System.out.println("col1: " + clientAnchor.getCol1() + ", col2: " + clientAnchor.getCol2() + ", row1: " + clientAnchor.getRow1() + ", row2: " + clientAnchor.getRow2());
             System.out.println("x1: " + clientAnchor.getDx1() + ", x2: " + clientAnchor.getDx2() + ", y1: " + clientAnchor.getDy1() + ", y2: " + clientAnchor.getDy2());
@@ -66,6 +70,12 @@ public class PictureParser {
             FileOutputStream out = new FileOutputStream(fullFileName);
             out.write(pictureData.getData());
             out.close();
+
+            }
+            catch (ClassCastException ex ){
+
+            }
+
         }
     }
 
@@ -114,7 +124,7 @@ public class PictureParser {
             if (currentCell == null) {
 
             } else {
-                if (currentCell.getStringCellValue().toString().equalsIgnoreCase("Артикул")) {
+                if (currentCell.getStringCellValue().equalsIgnoreCase("Артикул")) {
                     codeColumnIndex = i;
                 }
             }

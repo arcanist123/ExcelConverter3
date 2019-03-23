@@ -8,6 +8,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
 import javax.xml.stream.events.EndDocument;
+import java.io.Console;
 import java.io.IOException;
 import java.util.Base64;
 import java.util.HashMap;
@@ -62,8 +63,13 @@ public class MaterialsSection {
                     vendorCodeCell.setCellType(CellType.STRING);
                     String vendorCodeCellValue = vendorCodeCell.getStringCellValue();
 
+                    if (vendorCodeCellValue.contains("1023")){
+                        System.out.println(vendorCodeCellValue.toString());
+                    }
+
                     attributeNameCell.setCellType(CellType.STRING);
                     String attributeNameCellValue = attributeNameCell.getStringCellValue();
+
 
                     if (vendorCodeCellValue == "" || attributeNameCellValue == "") {
                         //this is not a valid row - we don't need to process it
