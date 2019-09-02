@@ -5,7 +5,7 @@ public enum Actions {
     GET_XLSX_FROM_XML("GET_XLSX_FROM_XML"),
     GET_XML_FROM_XLSX("GET_XML_FROM_XLSX");
     
-    public static final String GENERATE_PICTURES = "GENERATE_PICTURES";
+        public static final String GENERATE_PICTURES = "GENERATE_PICTURES";
     private final String text;
 
     /**

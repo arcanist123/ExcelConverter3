@@ -3,13 +3,11 @@ package excel.converter;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 
-
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 
 public class PictureParser {
     private Hashtable<Integer, XSSFPictureData> pictureDataMap;
@@ -53,26 +51,25 @@ public class PictureParser {
             try {
                 XSSFPicture inpPic = (XSSFPicture) pic;
 
-            XSSFClientAnchor clientAnchor = inpPic.getClientAnchor();
-            System.out.println("col1: " + clientAnchor.getCol1() + ", col2: " + clientAnchor.getCol2() + ", row1: " + clientAnchor.getRow1() + ", row2: " + clientAnchor.getRow2());
-            System.out.println("x1: " + clientAnchor.getDx1() + ", x2: " + clientAnchor.getDx2() + ", y1: " + clientAnchor.getDy1() + ", y2: " + clientAnchor.getDy2());
-            final XSSFPictureData pictureData = inpPic.getPictureData();
+                XSSFClientAnchor clientAnchor = inpPic.getClientAnchor();
+                System.out.println("col1: " + clientAnchor.getCol1() + ", col2: " + clientAnchor.getCol2() + ", row1: " + clientAnchor.getRow1() + ", row2: " + clientAnchor.getRow2());
+                System.out.println("x1: " + clientAnchor.getDx1() + ", x2: " + clientAnchor.getDx2() + ", y1: " + clientAnchor.getDy1() + ", y2: " + clientAnchor.getDy2());
+                final XSSFPictureData pictureData = inpPic.getPictureData();
 
-            //get the name of the picture
-            //get factory code
-            String factoryCode = getFactoryCode(sheet, clientAnchor.getRow1(), factoryCodeColumnIndex);
-            //get the file extension
-            String fileExtension = pictureData.suggestFileExtension();
-            //get the full file name
-            String fullFileName = targetFile + "\\" + factoryCode + "." + fileExtension;
+                //get the name of the picture
+                //get factory code
+                String factoryCode = getFactoryCode(sheet, clientAnchor.getRow1(), factoryCodeColumnIndex);
+                //get the file extension
+                String fileExtension = pictureData.suggestFileExtension();
+                //get the full file name
+                String fullFileName = targetFile + "\\" + factoryCode + "." + fileExtension;
 
-            //generate the file
-            FileOutputStream out = new FileOutputStream(fullFileName);
-            out.write(pictureData.getData());
-            out.close();
+                //generate the file
+                FileOutputStream out = new FileOutputStream(fullFileName);
+                out.write(pictureData.getData());
+                out.close();
 
-            }
-            catch (ClassCastException ex ){
+            } catch (ClassCastException ex) {
 
             }
 
@@ -120,13 +117,21 @@ public class PictureParser {
         for (int i = 0; i < 100; i++) {
             //get the current cell
             Cell currentCell = firstRow.getCell(i);
-            //get the value of the cell
-            if (currentCell == null) {
 
-            } else {
-                if (currentCell.getStringCellValue().equalsIgnoreCase("Артикул")) {
-                    codeColumnIndex = i;
+
+            //get the value of the cell
+            if (currentCell != null) {
+                //inform about the type of the current cell
+                System.out.println("Cell " + i + " has type " + currentCell.getCellTypeEnum().toString());
+
+                if (currentCell.getCellTypeEnum() == CellType.STRING) {
+                    //inform about the value of the current cell
+                    System.out.println("Cell " + i + " has value " + currentCell.getStringCellValue().toString());
+                    if (currentCell.getStringCellValue().equalsIgnoreCase("Артикул")) {
+                        codeColumnIndex = i;
+                    }
                 }
+
             }
         }
 
