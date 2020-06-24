@@ -19,6 +19,8 @@ public enum ColumnHeaderTexts {
     public static final String COUNTRY = "Страна";
     public static final String COMPOSITION = "Состав";
     public static final String MATERIAL_GROUP = "Группа";
+    public static final String BARCODE = "Штрихкод";
+
 
 
 }

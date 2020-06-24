@@ -16,6 +16,7 @@ public class MaterialAttribute {
     private double discount;
     private double priceWithDiscount;
     private String santimeters;
+    private String barcode;
 
 
     private MaterialAttribute() {
@@ -56,6 +57,9 @@ public class MaterialAttribute {
         String soldQuantityString = materialAttributeElement.getElementsByTagName(Tag.ATTRIBUTE_SOLD_QUANTITY.toString()).item(0).getTextContent();
         materialAttribute.soldQuantity = Integer.parseInt(soldQuantityString);
 
+        //get the barcode
+        String barcode = materialAttributeElement.getElementsByTagName(Tag.BARCODE.toString()).item(0).getTextContent();
+        materialAttribute.barcode = barcode;
         return materialAttribute;
     }
 
@@ -72,6 +76,12 @@ public class MaterialAttribute {
         attributeNameCell.setCellValue(this.attributeName);
         CellStyle attributeNameCellStyle = stylesCache.getAttributeNameCellStyle();
         attributeNameCell.setCellStyle(attributeNameCellStyle);
+
+        //output barcode
+        Cell barcodeCell = row.createCell(ColumnIndex.HEADER_BARCODE);
+        barcodeCell.setCellValue(this.barcode);
+        CellStyle barcodeCellStyle = stylesCache.getAttributeNameCellStyle();
+        barcodeCell.setCellStyle(barcodeCellStyle);
 
         //output santimeters
         Cell attributeSantimetersCell = row.createCell(ColumnIndex.HEADER_SANTIMETERS);

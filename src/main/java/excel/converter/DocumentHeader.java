@@ -29,17 +29,17 @@ public class DocumentHeader {
     public DocumentHeader(Element documentHeader) {
 
         //get the name of the organisation
-        this.organisationName = documentHeader.getElementsByTagName(Tags.ORGANISATION_NAME)
+        this.organisationName = documentHeader.getElementsByTagName(Tag.ORGANISATION_NAME.toString())
                 .item(0)
                 .getTextContent();
 
         //get the organisation factual address
-        this.organisationFactualAddress = documentHeader.getElementsByTagName(Tags.ORGANISATION_FACTUAL_ADDRESS)
+        this.organisationFactualAddress = documentHeader.getElementsByTagName(Tag.ORGANISATION_FACTUAL_ADDRESS.toString())
                 .item(0)
                 .getTextContent();
 
         //get the organisation legal address
-        this.organisationLegalAddress = documentHeader.getElementsByTagName(Tags.ORGANISATION_LEGAL_ADDRESS)
+        this.organisationLegalAddress = documentHeader.getElementsByTagName(Tag.ORGANISATION_LEGAL_ADDRESS.toString())
                 .item(0)
                 .getTextContent();
 
@@ -104,6 +104,11 @@ public class DocumentHeader {
                 Cell headerDescriptionCell = headerRow.createCell(ColumnIndex.HEADER_MATERIAL_NAME);
                 headerDescriptionCell.setCellValue(ColumnHeaderTexts.MATERIAL_NAME);
                 headerDescriptionCell.setCellStyle(headerCellStyle);
+
+                //show barcode header
+                Cell barcodeCell = headerRow.createCell(ColumnIndex.HEADER_BARCODE);
+                barcodeCell.setCellValue(ColumnHeaderTexts.BARCODE);
+                barcodeCell.setCellStyle(headerCellStyle);
 
                 //show size header
                 Cell headerSizeCell = headerRow.createCell(ColumnIndex.HEADER_ATTRIBUTE_NAME);

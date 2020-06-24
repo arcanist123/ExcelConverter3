@@ -24,7 +24,8 @@ public enum Tag {
     ATTRIBUTE_QUANTITY("AttributeQuantity"),
     MATERIAL_GROUP("MaterialGroup"),
     MATERIALS_SECTION("Materials"),
-    ATTRIBUTE_NAME("AttributeName");
+    ATTRIBUTE_NAME("AttributeName"),
+    BARCODE("Barcode");
     String tagName;
 
     // Constructor
