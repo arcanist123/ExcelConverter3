@@ -26,10 +26,6 @@ public class Columns implements Iterable<Column> {
     public static final String materialPicture = "MaterialPicture";
 
     private ArrayList<Column> columns;
-    private static final String HEADER_MATERIAL_GROUP_GUID = "GUID группы";
-    private static final String HEADER_MATERIAL_GUID = "GUID товара";
-    private static final String HEADER_MATERIAL_ATTRIBUTE_GUID = "GUID характеристики";
-    private static final String HEADER_PHOTO = "Фото";
     private static final String HEADER_MATERIAL_VENDOR_CODE = "Артикул";
     private static final String HEADER_MATERIAL_DESCRIPTION = "Описание";
     private static final String HEADER_ATTRIBUTE_DESCRIPTION = "Размер";
@@ -39,11 +35,9 @@ public class Columns implements Iterable<Column> {
     private static final String HEADER_PRICE_WITH_DISCOUNT = "Цена со скидкой";
     private static final String HEADER_QUANTITY = "Количество";
     private static final String HEADER_SOLD_QUANTITY = "Ваш Заказ";
-    private static final String HEADER_SUM = "Итого";
     private static final String HEADER_COUNTRY = "Страна";
     private static final String HEADER_COMPOSITION = "Состав";
     private static final String HEADER_MATERIAL_GROUP = "Группа";
-
 
     @Override
     public Iterator<Column> iterator() {
@@ -72,19 +66,23 @@ public class Columns implements Iterable<Column> {
     public Columns(Row headerRow) {
         columns = new ArrayList<Column>();
         for (Cell cell : headerRow) {
-            //check all string cells
-            if (cell.getCellTypeEnum() == CellType.STRING) {
+            // check all string cells
+            if (cell.getCellType() == CellType.STRING) {
                 if (cell.getStringCellValue().toUpperCase().equals(HEADER_MATERIAL_VENDOR_CODE.toUpperCase())) {
-                    this.columns.add(new Column(materialVendorCode, HEADER_MATERIAL_VENDOR_CODE, cell.getColumnIndex()));
+                    this.columns
+                            .add(new Column(materialVendorCode, HEADER_MATERIAL_VENDOR_CODE, cell.getColumnIndex()));
 
                 } else if (cell.getStringCellValue().toUpperCase().equals(HEADER_MATERIAL_DESCRIPTION.toUpperCase())) {
-                    this.columns.add(new Column(materialDescription, HEADER_MATERIAL_DESCRIPTION, cell.getColumnIndex()));
+                    this.columns
+                            .add(new Column(materialDescription, HEADER_MATERIAL_DESCRIPTION, cell.getColumnIndex()));
 
                 } else if (cell.getStringCellValue().toUpperCase().equals(HEADER_ATTRIBUTE_DESCRIPTION.toUpperCase())) {
-                    this.columns.add(new Column(attributeDescription, HEADER_ATTRIBUTE_DESCRIPTION, cell.getColumnIndex()));
+                    this.columns
+                            .add(new Column(attributeDescription, HEADER_ATTRIBUTE_DESCRIPTION, cell.getColumnIndex()));
 
                 } else if (cell.getStringCellValue().toUpperCase().equals(HEADER_ATTRIBUTE_SANTIMETERS.toUpperCase())) {
-                    this.columns.add(new Column(attributeSantimeters, HEADER_ATTRIBUTE_SANTIMETERS, cell.getColumnIndex()));
+                    this.columns
+                            .add(new Column(attributeSantimeters, HEADER_ATTRIBUTE_SANTIMETERS, cell.getColumnIndex()));
 
                 } else if (cell.getStringCellValue().toUpperCase().equals(HEADER_ATTRIBUTE_PRICE.toUpperCase())) {
                     this.columns.add(new Column(attributePrice, HEADER_ATTRIBUTE_PRICE, cell.getColumnIndex()));
@@ -93,7 +91,8 @@ public class Columns implements Iterable<Column> {
                     this.columns.add(new Column(attributeDiscount, HEADER_DISCOUNT, cell.getColumnIndex()));
 
                 } else if (cell.getStringCellValue().toUpperCase().equals(HEADER_PRICE_WITH_DISCOUNT.toUpperCase())) {
-                    this.columns.add(new Column(attributePriceWithDiscount, HEADER_PRICE_WITH_DISCOUNT, cell.getColumnIndex()));
+                    this.columns.add(
+                            new Column(attributePriceWithDiscount, HEADER_PRICE_WITH_DISCOUNT, cell.getColumnIndex()));
 
                 } else if (cell.getStringCellValue().toUpperCase().equals(HEADER_QUANTITY.toUpperCase())) {
                     this.columns.add(new Column(attributeQuantity, HEADER_QUANTITY, cell.getColumnIndex()));

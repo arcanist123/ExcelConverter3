@@ -5,14 +5,12 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Base64;
 import java.util.Vector;
 
@@ -32,50 +30,53 @@ public class Material {
 
     public static Material createMaterial(Element materialElement) throws IOException {
 
-        //create instance of material
+        // create instance of material
         Material material = new Material();
 
-        //get the name of material
-        material.materialName = materialElement.getElementsByTagName(Tag.MATERIAL_NAME.toString()).item(0).getTextContent();
+        // get the name of material
+        material.materialName = materialElement.getElementsByTagName(Tag.MATERIAL_NAME.toString()).item(0)
+                .getTextContent();
 
-        //get the guid of material
-        material.materialGUID = materialElement.getElementsByTagName(Tag.MATERIAL_GUID.toString()).item(0).getTextContent();
+        // get the guid of material
+        material.materialGUID = materialElement.getElementsByTagName(Tag.MATERIAL_GUID.toString()).item(0)
+                .getTextContent();
 
-        //get the material vendor code
-        material.materialVendorCode = materialElement.getElementsByTagName(Tag.MATERIAL_VENDOR_CODE.toString()).item(0).getTextContent();
+        // get the material vendor code
+        material.materialVendorCode = materialElement.getElementsByTagName(Tag.MATERIAL_VENDOR_CODE.toString()).item(0)
+                .getTextContent();
 
-        //get the picture
-        //get the possible pictures
+        // get the picture
+        // get the possible pictures
         NodeList pictures = materialElement.getElementsByTagName(Tag.PICTURE.toString());
-        //check if the current material has picture
+        // check if the current material has picture
         if (pictures.getLength() > 0) {
-            //this material has picture. get it
+            // this material has picture. get it
             String pictureEncoded = pictures.item(0).getTextContent();
-            //decode base64 string
+            // decode base64 string
             material.picture = Base64.getDecoder().decode(pictureEncoded);
-            //ensure that the size of the picture is adequate
+            // ensure that the size of the picture is adequate
             material.picture = resizePicture(material.picture);
 
         } else {
-            ///no picture was provided from source
+            /// no picture was provided from source
         }
 
-        //now populate the list of the material attributes
+        // now populate the list of the material attributes
         NodeList materialAttributes = materialElement.getElementsByTagName(Tag.ATTRIBUTE.toString());
 
         for (int i = 0; i < materialAttributes.getLength(); i++) {
-            //get the current material attribute
+            // get the current material attribute
             Element materialAttributeElement = (Element) materialAttributes.item(i);
-            //create an instance of material attribute
+            // create an instance of material attribute
             material.materialAttributes.add(MaterialAttribute.createMaterialAttribute(materialAttributeElement));
         }
 
-        //return the results of processing
+        // return the results of processing
         return material;
     }
 
     private static byte[] resizePicture(byte[] picture) throws IOException {
-        //check if the image is too big
+        // check if the image is too big
         if (picture.length > 50000) {
 
             int factor = 1;
@@ -127,59 +128,63 @@ public class Material {
 
     public short writeToXLSX(Sheet mainSheet, short currentRow, Styles stylesCache) {
 
-        //materials themselves are not being written to the sheet - only the underlying attributes are
-        //save the current row for future usage
+        // materials themselves are not being written to the sheet - only the underlying
+        // attributes are
+        // save the current row for future usage
         short originalRow = currentRow;
 
-        //write the attributes of material
+        // write the attributes of material
         for (int i = 0; i < this.materialAttributes.size(); i++) {
-            //write the current material attribute
+            // write the current material attribute
             currentRow = this.materialAttributes.elementAt(i).writeToXLSX(mainSheet, currentRow, stylesCache);
         }
 
-        //determine the height of the row
+        // determine the height of the row
         float rowHeith;
         if (materialAttributes.size() > 5) {
-            //set the standard row height
+            // set the standard row height
             rowHeith = (float) PICTURE_HEIGHT / 5;
         } else {
             rowHeith = (float) PICTURE_HEIGHT / materialAttributes.size();
         }
 
-        //output the material guid and material name
+        // output the material guid and material name
         for (int i = originalRow; i < currentRow; i++) {
-            //get the current row
+            // get the current row
             Row row = mainSheet.getRow(i);
 
-            //set the row height
+            // set the row height
             row.setHeightInPoints(rowHeith);
-            //output the material guid
+            // output the material guid
             Cell materialGuidCell = row.createCell(ColumnIndex.HEADER_MATERIAL_GUID);
             materialGuidCell.setCellValue(this.materialGUID);
 
-            //output the material name
+            // output the material name
             Cell materialNameCell = row.createCell(MATERIAL_NAME_COLUMN);
             materialNameCell.setCellValue(this.materialName);
             materialNameCell.setCellStyle(stylesCache.getMaterialNameCellStyle());
 
-            //output the vendor code
+            // output the vendor code
             Cell materialVendorCodeCell = row.createCell(MATERIAL_VENDOR_CODE_COLUMN);
             materialVendorCodeCell.setCellValue(this.materialVendorCode);
             CellStyle materialVendorCodeCellStyle = stylesCache.getMaterialVendorCodeCellStyle();
             materialVendorCodeCell.setCellStyle(materialVendorCodeCellStyle);
         }
 
-        //unite the cells for material
+        // unite the cells for material
         if (originalRow == currentRow - 1) {
-            //in this case we are not having more then one row to work. no need to unite one cell
+            // in this case we are not having more then one row to work. no need to unite
+            // one cell
         } else {
-            //we have some cell to merge. merge them
-            //merge the material vendor code
-            CellRangeAddress materialVendorCodeCellRange = new CellRangeAddress(originalRow, currentRow - 1, ColumnIndex.HEADER_VENDOR_CODE, ColumnIndex.HEADER_VENDOR_CODE);
+            // we have some cell to merge. merge them
+            // merge the material vendor code
+            CellRangeAddress materialVendorCodeCellRange = new CellRangeAddress(originalRow, currentRow - 1,
+                    ColumnIndex.HEADER_VENDOR_CODE, ColumnIndex.HEADER_VENDOR_CODE);
             mainSheet.addMergedRegion(materialVendorCodeCellRange);
 
-            //merge the material name cells
-            CellRangeAddress materialNameCellRange = new CellRangeAddress(originalRow, currentRow - 1, ColumnIndex.HEADER_MATERIAL_NAME, ColumnIndex.HEADER_MATERIAL_NAME);
+            // merge the material name cells
+            CellRangeAddress materialNameCellRange = new CellRangeAddress(originalRow, currentRow - 1,
+                    ColumnIndex.HEADER_MATERIAL_NAME, ColumnIndex.HEADER_MATERIAL_NAME);
             mainSheet.addMergedRegion(materialNameCellRange);
 
         }
@@ -192,8 +197,8 @@ public class Material {
     }
 
     private void insertPicture(Sheet mainSheet, byte[] picture, short originalRow, short currentRow) {
-        //add the picture to the workbook
-        //get picture cache instance
+        // add the picture to the workbook
+        // get picture cache instance
         PictureCache cache = PictureCache.getInstance();
 
         int pictureId = cache.addPicture(mainSheet.getWorkbook(), picture, Workbook.PICTURE_TYPE_JPEG);
