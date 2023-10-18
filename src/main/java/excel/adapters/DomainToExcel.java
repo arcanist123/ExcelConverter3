@@ -3,6 +3,7 @@ package excel.adapters;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
+import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -34,11 +35,12 @@ public class DomainToExcel {
     private void writeDocument(Workbook wb, Sheet sheet, Document document) {
         var currentRow = this.writeHeader(wb, sheet);
         for (MaterialGroup group : document.materialGroups()) {
-            currentRow = this.writeGroup(wb, sheet, document, currentRow);
+            currentRow = this.writeGroup(wb, sheet, document, group, currentRow);
         }
     }
 
-    private int writeGroup(Workbook wb, Sheet sheet, Document document, int currentRow) {
+    private int writeGroup(Workbook wb, Sheet sheet, Document document, MaterialGroup group, int currentRow) {
+        Row row = sheet.createRow(currentRow);
         return 0;
     }
 
