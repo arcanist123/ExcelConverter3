@@ -1,10 +1,18 @@
 package excel.adapters;
 
 public enum CellType1C {
+
+    groupGuid,
+    groupName,
     materialGuid,
     materialName,
-    vendorCode,
-    groupGuid,
-    groupName;
+    materialVendorCode,
+    attibuteName,
+    attributeQuantity,
+    attributeBarcode,
+    attributePrice,
+    attributeOrder,
+    attributeSum,
+    attributeGuid;
 
 }
