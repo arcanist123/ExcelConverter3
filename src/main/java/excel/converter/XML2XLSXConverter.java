@@ -3,15 +3,20 @@ package excel.converter;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.w3c.dom.Document;
+
 import org.xml.sax.SAXException;
 
+import excel.adapters.DomainToExcel;
+import excel.adapters.JsonToDomainAdapter;
+import excel.domains.Document;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 
 public class XML2XLSXConverter {
     private static XML2XLSXConverter instance = null;
@@ -36,43 +41,40 @@ public class XML2XLSXConverter {
         return instance;
     }
 
-    private static PriceList getConvertedDocument(String sourceXML)
-            throws ParserConfigurationException, SAXException, IOException {
-        // get the name of the source file. By convention, it is named source.xml and is
-        // located in the source folder
-        File xmlFile = new File(sourceXML);
-        DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = factory.newDocumentBuilder();
-        Document doc = dBuilder.parse(xmlFile);
-
-        // create the excel document Java representation
-        PriceList priceList = new PriceList(doc.getDocumentElement());
-        return priceList;
-    }
-
     public String getSourceXML() {
         return sourceXML;
     }
 
     public void convert() throws ParserConfigurationException, IOException, SAXException {
-        // price list
-        PriceList priceList = getConvertedDocument(this.sourceXML);
+        // convert file to domain
+        var sourceFile = new File(sourceXML);
+        var sourceFileString = Files.readString(sourceFile.toPath());
+        var adapter = new JsonToDomainAdapter(sourceFileString);
+        Document document = adapter.getDocument();
 
-        // we have the instance of all materials.
-        // create the xlsx document
-        Workbook wb = new XSSFWorkbook();
-        Sheet mainSheet = wb.createSheet("ПРАЙС");
-        // ensure that the grouping in this sheet is on top
-        mainSheet.setRowSumsBelow(false);
+        // convert domain to result
+        var docToXlsxAdapter = new DomainToExcel(null);
+        var result = docToXlsxAdapter.getExcelContent(document);
+        var targetFile = new File(targetExcel);
+        Files.write(targetFile.toPath(), result);
 
-        // write the PriceList to xlsx
-        priceList.writeToXLSX(mainSheet);
+        // // price list
+        // PriceList priceList = getConvertedDocument(this.sourceXML);
 
-        // write the xlsx Price list into the file
-        FileOutputStream fileOut = new FileOutputStream(this.targetExcel);
-        wb.write(fileOut);
-        wb.close();
-        fileOut.close();
+        // // we have the instance of all materials.
+        // // create the xlsx document
+        // Workbook wb = new XSSFWorkbook();
+        // // ensure that the grouping in this sheet is on top
+        // mainSheet.setRowSumsBelow(false);
+
+        // // write the PriceList to xlsx
+        // priceList.writeToXLSX(mainSheet);
+
+        // // write the xlsx Price list into the file
+        // FileOutputStream fileOut = new FileOutputStream(this.targetExcel);
+        // wb.write(fileOut);
+        // wb.close();
+        // fileOut.close();
 
     }
 

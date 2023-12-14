@@ -21,7 +21,7 @@ public class DomainToExcel {
         // tests
     }
 
-    byte[] getExcelContent(Document document) throws IOException {
+    public byte[] getExcelContent(Document document) throws IOException {
         // create the xlsx document
         Workbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("ПРАЙС");
