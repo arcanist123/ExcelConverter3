@@ -18,6 +18,7 @@ public class DomainToExcel {
 
     public DomainToExcel(CellDescriptions cellDescriptions) {
         this.cellDescriptions = cellDescriptions;
+        // tests
     }
 
     byte[] getExcelContent(Document document) throws IOException {
