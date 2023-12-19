@@ -58,23 +58,6 @@ public class XML2XLSXConverter {
         var targetFile = new File(targetExcel);
         Files.write(targetFile.toPath(), result);
 
-        // // price list
-        // PriceList priceList = getConvertedDocument(this.sourceXML);
-
-        // // we have the instance of all materials.
-        // // create the xlsx document
-        // Workbook wb = new XSSFWorkbook();
-        // // ensure that the grouping in this sheet is on top
-        // mainSheet.setRowSumsBelow(false);
-
-        // // write the PriceList to xlsx
-        // priceList.writeToXLSX(mainSheet);
-
-        // // write the xlsx Price list into the file
-        // FileOutputStream fileOut = new FileOutputStream(this.targetExcel);
-        // wb.write(fileOut);
-        // wb.close();
-        // fileOut.close();
 
     }
 
