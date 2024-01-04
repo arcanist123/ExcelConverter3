@@ -26,6 +26,7 @@ public class JsonToDomainAdapter {
         public static final String materialAttibuteDiscount = null;
         public static final String materialAttibutePriceWithDiscount = null;
         public static final String materialAttibuteSize = null;
+        public static final String materialAttibuteBarcode = null;
 
     }
 
@@ -62,7 +63,7 @@ public class JsonToDomainAdapter {
             var discount = currentJsonRecord.getString(Constants.materialAttibuteDiscount);
             var priceWithDiscount = currentJsonRecord.getString(Constants.materialAttibutePriceWithDiscount);
             var size = currentJsonRecord.getString(Constants.materialAttibuteSize);
-        var barcode = currentJsonRecord.getString(json)
+            var barcode = currentJsonRecord.getString(Constants.materialAttibuteBarcode);
         }
         return attribute;
     }
