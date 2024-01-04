@@ -1,5 +1,7 @@
 package excel.domains;
 
-public record Document(MaterialGroup[] materialGroups) {
+import java.util.ArrayList;
+
+public record Document(ArrayList<MaterialGroup> materialGroups) {
 
 }

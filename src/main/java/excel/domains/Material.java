@@ -1,5 +1,7 @@
 package excel.domains;
 
+import java.util.ArrayList;
+
 public record Material(String materialName, String materialGUID, String materialVendorCode,
-                MaterialAttribute[] materialAttributes, String materialPicture) {
+        ArrayList<MaterialAttribute> materialAttributes, String materialPicture) {
 }
