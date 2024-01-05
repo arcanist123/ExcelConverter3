@@ -1,47 +1,19 @@
 [
     {
     "groupName": "Майки / Футболки / Рубашки / Комбинезоны",
-    "groupGUID": "123",
+    "groupGuid": "123",
     "materialName": "Футболка Angry Bird зеленая",
-    "materialGUID": "",
+    "materialGuid": "123",
     "materialVendorCode": "С1003-1",
     "materialPicture": "",
-    "attributeName": "",
-    "attributeGUID": "",
-    "quantity": 1,
-    "soldQuantity": "",
-    "price": "",
-    "barcode": "",
-    "location": "1"
-    },
-    {
-    "groupName": "Майки / Футболки / Рубашки / Комбинезоны",
-    "groupGUID": "",
-    "materialName": "Футболка Angry Bird зеленая",
-    "materialGUID": "",
-    "materialVendorCode": "С1003-1",
-    "materialPicture": "",
-    "attributeName": "",
-    "attributeGUID": "",
-    "quantity": 1,
-    "soldQuantity": "",
-    "price": "",
-    "barcode": "",
-    "location": "2"
-    },
-    {
-    "groupName": "Майки / Футболки / Рубашки / Комбинезоны",
-    "groupGUID": "",
-    "materialName": "Футболка Angry Bird синяя",
-    "materialGUID": "",
-    "materialVendorCode": "С1003-2",
-    "materialPicture": "",
-    "attributeName": "",
-    "attributeGUID": "",
-    "quantity": 1,
-    "soldQuantity": "",
-    "price": "",
-    "barcode": "",
-    "location": "1"
+    "materialAttributeName":"XL",
+    "materialAttributeGuid": "123",
+    "materialAttributeQuantity": "1",
+    "materialAttributeSoldQuantity": "0",
+    "materialAttributeSoldPrice": "100",
+    "materialAttributeDiscount": "0",
+    "materialAttributePriceWithDiscount": "100",
+    "materialAttributeSize": "1",
+    "materialAttributeBarcode": "123"
     }
     ]

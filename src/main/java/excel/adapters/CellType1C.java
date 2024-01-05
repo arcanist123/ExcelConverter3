@@ -2,17 +2,20 @@ package excel.adapters;
 
 public enum CellType1C {
 
-    groupGuid,
-    groupName,
+    materialGroupGuid,
+    materialGroupName,
     materialGuid,
+    materialAttibuteGuid,
     materialName,
     materialVendorCode,
-    attibuteName,
-    attributeQuantity,
-    attributeBarcode,
-    attributePrice,
-    attributeOrder,
-    attributeSum,
-    attributeGuid;
+    materialPicture,
+    materialAttributeName,
+    materialAttibuteQuantity,
+    materialAttibuteSoldQuantity,
+    materialAttibutePrice,
+    materialAttibuteDiscount,
+    materialAttibutePriceWithDiscount,
+    materialAttibuteSize,
+    materialAttibuteBarcode;
 
 }

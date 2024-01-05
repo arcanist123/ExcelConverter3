@@ -17,16 +17,16 @@ public class JsonToDomainAdapter {
         public final static String materialGuid = "materialGuid";
         public final static String materialAttibuteGuid = "materialAttributeGuid";
         public final static String materialName = "materialName";
-        public static final String vendorCode = null;
-        public static final String materialPicture = null;
-        public static final String materialAttributeName = null;
-        public static final String materialAttibuteQuantity = null;
-        public static final String materialAttibuteSoldQuantity = null;
-        public static final String materialAttibutePrice = null;
-        public static final String materialAttibuteDiscount = null;
-        public static final String materialAttibutePriceWithDiscount = null;
-        public static final String materialAttibuteSize = null;
-        public static final String materialAttibuteBarcode = null;
+        public static final String materialVendorCode = "materialVendorCode";
+        public static final String materialPicture = "materialPicture";
+        public static final String materialAttributeName = "materialAttributeName";
+        public static final String materialAttibuteQuantity = "materialAttributeQuantity";
+        public static final String materialAttibuteSoldQuantity = "materialAttributeSoldQuantity";
+        public static final String materialAttibutePrice = "materialAttributeGuid";
+        public static final String materialAttibuteDiscount = "materialAttributeDiscount";
+        public static final String materialAttibutePriceWithDiscount = "materialAttributePriceWithDiscount";
+        public static final String materialAttibuteSize = "materialAttributeSize";
+        public static final String materialAttibuteBarcode = "materialAttributeBarcode";
 
     }
 
@@ -45,7 +45,7 @@ public class JsonToDomainAdapter {
             var material = this.insertMaterialIntoGroup(currentGroup, currentJsonRecord);
             var materialAttribute = this.insertAttributeIntoMaterial(material, currentJsonRecord);
         }
-        return null;
+        return document;
     }
 
     private MaterialAttribute insertAttributeIntoMaterial(Material material, JSONObject currentJsonRecord) {
@@ -57,13 +57,16 @@ public class JsonToDomainAdapter {
                 .orElse(null);
         if (attribute == null) {
             var name = currentJsonRecord.getString(Constants.materialAttributeName);
-            var quantity = currentJsonRecord.getString(Constants.materialAttibuteQuantity);
-            var soldQuantity = currentJsonRecord.getString(Constants.materialAttibuteSoldQuantity);
-            var price = currentJsonRecord.getString(Constants.materialAttibutePrice);
-            var discount = currentJsonRecord.getString(Constants.materialAttibuteDiscount);
-            var priceWithDiscount = currentJsonRecord.getString(Constants.materialAttibutePriceWithDiscount);
+            var quantity = Double.parseDouble(currentJsonRecord.getString(Constants.materialAttibuteQuantity));
+            var soldQuantity = Double.parseDouble(currentJsonRecord.getString(Constants.materialAttibuteSoldQuantity));
+            var price = Double.parseDouble(currentJsonRecord.getString(Constants.materialAttibutePrice));
+            var discount = Double.parseDouble(currentJsonRecord.getString(Constants.materialAttibuteDiscount));
+            var priceWithDiscount = Double
+                    .parseDouble(currentJsonRecord.getString(Constants.materialAttibutePriceWithDiscount));
             var size = currentJsonRecord.getString(Constants.materialAttibuteSize);
             var barcode = currentJsonRecord.getString(Constants.materialAttibuteBarcode);
+            attribute = new MaterialAttribute(guid, name, quantity, soldQuantity, price, discount, priceWithDiscount,
+                    size, barcode);
         }
         return attribute;
     }
@@ -76,7 +79,7 @@ public class JsonToDomainAdapter {
                 .orElse(null);
         if (material == null) {
             var name = currentJsonRecord.getString(Constants.materialName);
-            var vendorCode = currentJsonRecord.getString(Constants.vendorCode);
+            var vendorCode = currentJsonRecord.getString(Constants.materialVendorCode);
             var picture = currentJsonRecord.getString(Constants.materialPicture);
             material = new Material(guid, name, vendorCode, new ArrayList<MaterialAttribute>(),
                     picture);

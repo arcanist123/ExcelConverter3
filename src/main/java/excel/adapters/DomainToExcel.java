@@ -18,7 +18,6 @@ public class DomainToExcel {
 
     public DomainToExcel(CellDescriptions cellDescriptions) {
         this.cellDescriptions = cellDescriptions;
-        // tests
     }
 
     public byte[] getExcelContent(Document document) throws IOException {
@@ -46,13 +45,20 @@ public class DomainToExcel {
 
     private int writeMaterialAttribute(Workbook wb, Sheet sheet, Document document, MaterialAttribute materialAttribute,
             int currentRow) {
-        this.outputCell(sheet, currentRow, this.cellDescriptions.getCellDescription(CellType1C.attributeGuid));
-        this.outputCell(sheet, currentRow, this.cellDescriptions.getCellDescription(CellType1C.attibuteName));
-        this.outputCell(sheet, currentRow, this.cellDescriptions.getCellDescription(CellType1C.attributeBarcode));
-        this.outputCell(sheet, currentRow, this.cellDescriptions.getCellDescription(CellType1C.attributePrice));
-        this.outputCell(sheet, currentRow, this.cellDescriptions.getCellDescription(CellType1C.attributeQuantity));
-        this.outputCell(sheet, currentRow, this.cellDescriptions.getCellDescription(CellType1C.attributeOrder));
-        this.outputCell(sheet, currentRow, this.cellDescriptions.getCellDescription(CellType1C.attributeSum));
+        this.outputCell(sheet, currentRow,
+                this.cellDescriptions.getCellDescription(CellType1C.materialAttibuteBarcode));
+        // this.outputCell(sheet, currentRow,
+        // this.cellDescriptions.getCellDescription(CellType1C.attibuteName));
+        // this.outputCell(sheet, currentRow,
+        // this.cellDescriptions.getCellDescription(CellType1C.attributeBarcode));
+        // this.outputCell(sheet, currentRow,
+        // this.cellDescriptions.getCellDescription(CellType1C.attributePrice));
+        // this.outputCell(sheet, currentRow,
+        // this.cellDescriptions.getCellDescription(CellType1C.attributeQuantity));
+        // this.outputCell(sheet, currentRow,
+        // this.cellDescriptions.getCellDescription(CellType1C.attributeOrder));
+        // this.outputCell(sheet, currentRow,
+        // this.cellDescriptions.getCellDescription(CellType1C.attributeSum));
         return 0;
     }
 
@@ -80,17 +86,23 @@ public class DomainToExcel {
 
     private int writeGroup(Workbook wb, Sheet sheet, Document document, MaterialGroup group, int currentRow) {
         Row row = sheet.createRow(currentRow);
-        var groupGuidDescription = this.cellDescriptions.getCellDescription(CellType1C.groupGuid);
-        row.createCell(groupGuidDescription.columnIndex());
-        var groupNameDescription = this.cellDescriptions.getCellDescription(CellType1C.groupName);
-        row.createCell(groupNameDescription.columnIndex());
-        for (Material material : group.materials()) {
-            this.writeMaterial(wb, sheet, document, material, currentRow);
-        }
+        // var groupGuidDescription =
+        // this.cellDescriptions.getCellDescription(CellType1C.);
+        // row.createCell(groupGuidDescription.columnIndex());
+        // var groupNameDescription =
+        // this.cellDescriptions.getCellDescription(CellType1C.groupName);
+        // row.createCell(groupNameDescription.columnIndex());
+        // for (Material material : group.materials()) {
+        // this.writeMaterial(wb, sheet, document, material, currentRow);
+        // }
         return 0;
     }
 
     private int writeHeader(Workbook wb, Sheet sheet) {
-        return 0;
+        for (cellDescription descr : cellDescriptions) {
+
+        }
+
+        return 1;
     }
 }

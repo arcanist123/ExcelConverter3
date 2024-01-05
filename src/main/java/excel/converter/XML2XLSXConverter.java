@@ -6,6 +6,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import org.xml.sax.SAXException;
 
+import excel.adapters.CellDescriptions;
 import excel.adapters.DomainToExcel;
 import excel.adapters.JsonToDomainAdapter;
 import excel.domains.Document;
@@ -53,11 +54,10 @@ public class XML2XLSXConverter {
         Document document = adapter.getDocument();
 
         // convert domain to result
-        var docToXlsxAdapter = new DomainToExcel(null);
+        var docToXlsxAdapter = new DomainToExcel(new CellDescriptions());
         var result = docToXlsxAdapter.getExcelContent(document);
         var targetFile = new File(targetExcel);
         Files.write(targetFile.toPath(), result);
-
 
     }
 
