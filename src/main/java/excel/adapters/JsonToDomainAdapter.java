@@ -12,8 +12,8 @@ import excel.domains.MaterialGroup;
 
 public class JsonToDomainAdapter {
     private class Constants {
-        public final static String materialGroupGuid = "groupName";
-        public final static String materialGroupName = "groupGuid";
+        public final static String materialGroupGuid = "groupGuid";
+        public final static String materialGroupName = "groupName";
         public final static String materialGuid = "materialGuid";
         public final static String materialAttibuteGuid = "materialAttributeGuid";
         public final static String materialName = "materialName";

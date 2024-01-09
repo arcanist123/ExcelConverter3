@@ -87,15 +87,20 @@ public class DomainToExcel {
     }
 
     private int writeGroup(Workbook wb, Sheet sheet, Document document, MaterialGroup group, int currentRow) {
-        Row row = sheet.createRow(currentRow + 1);
-        var groupGuidDescription = this.cellDescriptions.getCellDescription(CellType1C.materialGroupName);
+        var offset = 1;
+        Row row = sheet.createRow(currentRow + offset);
+        var groupGuidDescription = this.cellDescriptions.getCellDescription(CellType1C.materialGroupGuid);
 
         row.createCell(groupGuidDescription.columnIndex())
-                .setCellValue(groupGuidDescription.columnDescription());
+                .setCellValue(group.groupGUID());
 
         var groupNameDescription = this.cellDescriptions.getCellDescription(CellType1C.materialGroupName);
         row.createCell(groupNameDescription.columnIndex())
-                .setCellValue(groupNameDescription.columnDescription());
+                .setCellValue(group.groupName());
+        for (Material material : group.materials()) {
+            offset++;
+            this.writeMaterial(wb, sheet, document, material, currentRow + offset);
+        }
         return currentRow + 2;
     }
 
