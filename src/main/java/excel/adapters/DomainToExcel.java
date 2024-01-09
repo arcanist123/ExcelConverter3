@@ -2,6 +2,8 @@ package excel.adapters;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -37,9 +39,9 @@ public class DomainToExcel {
     }
 
     private void writeDocument(Workbook wb, Sheet sheet, Document document) {
-        var currentRow = this.writeHeader(wb, sheet);
+        var currentRowIndex = this.writeHeader(wb, sheet);
         for (MaterialGroup group : document.materialGroups()) {
-            currentRow = this.writeGroup(wb, sheet, document, group, currentRow);
+            currentRowIndex = this.writeGroup(wb, sheet, document, group, currentRowIndex);
         }
     }
 
@@ -85,24 +87,27 @@ public class DomainToExcel {
     }
 
     private int writeGroup(Workbook wb, Sheet sheet, Document document, MaterialGroup group, int currentRow) {
-        Row row = sheet.createRow(currentRow);
-        // var groupGuidDescription =
-        // this.cellDescriptions.getCellDescription(CellType1C.);
-        // row.createCell(groupGuidDescription.columnIndex());
-        // var groupNameDescription =
-        // this.cellDescriptions.getCellDescription(CellType1C.groupName);
-        // row.createCell(groupNameDescription.columnIndex());
-        // for (Material material : group.materials()) {
-        // this.writeMaterial(wb, sheet, document, material, currentRow);
-        // }
-        return 0;
+        Row row = sheet.createRow(currentRow + 1);
+        var groupGuidDescription = this.cellDescriptions.getCellDescription(CellType1C.materialGroupName);
+
+        row.createCell(groupGuidDescription.columnIndex())
+                .setCellValue(groupGuidDescription.columnDescription());
+
+        var groupNameDescription = this.cellDescriptions.getCellDescription(CellType1C.materialGroupName);
+        row.createCell(groupNameDescription.columnIndex())
+                .setCellValue(groupNameDescription.columnDescription());
+        return currentRow + 2;
     }
 
     private int writeHeader(Workbook wb, Sheet sheet) {
-        for (cellDescription descr : cellDescriptions) {
-
+        var row = sheet.createRow(0);
+        var it = this.cellDescriptions.getIterator();
+        while (it.hasNext()) {
+            Map.Entry<CellType1C, CellDescription> entry = it.next();
+            var cellDescription = entry.getValue();
+            var cell = row.createCell(cellDescription.columnIndex());
+            cell.setCellValue(cellDescription.columnDescription());
         }
-
         return 1;
     }
 }
