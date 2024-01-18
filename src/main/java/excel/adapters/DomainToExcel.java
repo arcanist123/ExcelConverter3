@@ -48,7 +48,8 @@ public class DomainToExcel {
     private int writeMaterialAttribute(Workbook wb, Sheet sheet, Document document, MaterialAttribute materialAttribute,
             int currentRow) {
         this.outputCell(sheet, currentRow,
-                this.cellDescriptions.getCellDescription(CellType1C.materialAttibuteBarcode));
+                this.cellDescriptions.getCellDescription(CellType1C.materialAttributeBarcode),
+                materialAttribute.attributeGUID());
         // this.outputCell(sheet, currentRow,
         // this.cellDescriptions.getCellDescription(CellType1C.attibuteName));
         // this.outputCell(sheet, currentRow,
@@ -64,7 +65,13 @@ public class DomainToExcel {
         return 0;
     }
 
-    private void outputCell(Sheet sheet, int currentRow, CellDescription cellDescription) {
+    private void outputCell(Sheet sheet, int currentRow, CellDescription cellDescription, String value) {
+        var row = sheet.getRow(currentRow);
+        if (row == null) {
+            row = sheet.createRow(currentRow);
+        }
+        var cell = row.createCell(cellDescription.columnIndex());
+        cell.setCellValue(value);
     }
 
     private int writeMaterial(Workbook wb, Sheet sheet, Document document, Material material, int currentRow) {
@@ -72,9 +79,12 @@ public class DomainToExcel {
         for (MaterialAttribute materialAttribute : material.materialAttributes()) {
             currentRow = this.writeMaterialAttribute(wb, sheet, document, materialAttribute, currentRow);
         }
-        this.outputCell(sheet, startRow, this.cellDescriptions.getCellDescription(CellType1C.materialGuid));
-        this.outputCell(sheet, startRow, this.cellDescriptions.getCellDescription(CellType1C.materialVendorCode));
-        this.outputCell(sheet, startRow, this.cellDescriptions.getCellDescription(CellType1C.materialName));
+        this.outputCell(sheet, startRow, this.cellDescriptions.getCellDescription(CellType1C.materialGuid),
+                material.materialGUID());
+        this.outputCell(sheet, startRow, this.cellDescriptions.getCellDescription(CellType1C.materialVendorCode),
+                material.materialVendorCode());
+        this.outputCell(sheet, startRow, this.cellDescriptions.getCellDescription(CellType1C.materialName),
+                material.materialName());
         this.outputPicture(startRow, currentRow, material.materialPicture());
         this.resizeCellsForMaterial(startRow, currentRow);
         return currentRow;

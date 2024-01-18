@@ -5,17 +5,17 @@ public enum CellType1C {
     materialGroupGuid,
     materialGroupName,
     materialGuid,
-    materialAttibuteGuid,
+    materialAttributeGuid,
     materialName,
     materialVendorCode,
     materialPicture,
     materialAttributeName,
-    materialAttibuteQuantity,
-    materialAttibuteSoldQuantity,
-    materialAttibutePrice,
-    materialAttibuteDiscount,
-    materialAttibutePriceWithDiscount,
-    materialAttibuteSize,
-    materialAttibuteBarcode;
+    materialAttributeQuantity,
+    materialAttributeSoldQuantity,
+    materialAttributePrice,
+    materialAttributeDiscount,
+    materialAttributePriceWithDiscount,
+    materialAttributeSize,
+    materialAttributeBarcode;
 
 }
