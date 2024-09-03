@@ -1,10 +1,14 @@
 package excel.cli;
 
 import java.util.HashMap;
+
+import excel.adapters.FileSource;
+import excel.adapters.FileTarget;
 import excel.converter.XML2XLSXConverter;
 
 public class Main {
     private static final String actionGetXlsxFromXml = "GET_XLSX_FROM_XML";
+    private static final String actionXlsxAlighSequence = "XLSX_ALIGH_SEQUENCE";
 
     public static void main(String[] args) {
         new Main().run(args);
@@ -41,6 +45,13 @@ public class Main {
                     XML2XLSXConverter xml2XLSXConverter = XML2XLSXConverter.createConverter(sourceXML, targetExcel);
                     xml2XLSXConverter.convert();
                     break;
+
+                case actionXlsxAlighSequence:
+                    var sourceExcel = parameters.get("--source");
+                    targetExcel = parameters.get("--target");
+
+                    var fileSource = new FileSource(sourceExcel);
+                    var FileTarget = new FileTarget(targetExcel);
 
                 default:
                     break;
